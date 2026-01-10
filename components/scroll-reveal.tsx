@@ -12,38 +12,30 @@ export function ScrollReveal({ children, className = '' }: ScrollRevealProps) {
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const currentRef = ref.current
-    if (!currentRef) return
-
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-        } else {
-          setIsVisible(false)
-        }
+        setIsVisible(entry.isIntersecting)
       },
-      {
-        threshold: 0.2,
-        rootMargin: '50px'
-      }
+      { threshold: 0.1 }
     )
 
-    observer.observe(currentRef)
+    if (ref.current) {
+      observer.observe(ref.current)
+    }
 
     return () => {
-      observer.unobserve(currentRef)
+      if (ref.current) {
+        observer.unobserve(ref.current)
+      }
     }
   }, [])
 
   return (
     <div
       ref={ref}
-      className={`transition-all duration-700 ease-out ${className}`}
-      style={{
-        opacity: isVisible ? 1 : 0,
-        transform: isVisible ? 'translateY(0)' : 'translateY(60px)',
-      }}
+      className={`transition-all duration-1000 ${
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-20"
+      } ${className}`}
     >
       {children}
     </div>
