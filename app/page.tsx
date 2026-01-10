@@ -9,24 +9,16 @@ import { createClient } from "@/lib/supabase/server"
 import Link from "next/link"
 import { ScrollReveal } from "@/components/scroll-reveal"
 
-// Di bagian paling atas file, setelah imports
-export const revalidate = 0 // Disable cache, always fetch fresh data
-
-// Atau gunakan dynamic rendering
+export const revalidate = 0
 export const dynamic = 'force-dynamic'
 
 export default async function Page() {
   const supabase = await createClient()
 
-  // Fetch data from database
   const { data: profile } = await supabase.from("profiles").select("*").limit(1).single()
-
   const { data: skills } = await supabase.from("skills").select("*").order("level", { ascending: false })
-
   const { data: experiences } = await supabase.from("experiences").select("*").order("order_index", { ascending: true })
-
   const { data: books } = await supabase.from("books").select("*").order("created_at", { ascending: false })
-
   const { data: projects } = await supabase.from("projects").select("*").order("created_at", { ascending: false })
 
   return (
@@ -35,36 +27,36 @@ export default async function Page() {
       <Navbar />
 
       {/* Hero Section */}
-<section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-  <div className="container mx-auto px-4 relative z-10">
-    <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
-      <div className="flex-1 text-center lg:text-left space-y-6 max-w-2xl">
-        <h1 className="font-heading text-5xl md:text-7xl lg:text-8xl font-bold animate-fade-in">
-          <span className="gradient-text">{profile?.full_name || "Welcome !"}</span>
-        </h1>
-        <p className="text-xl md:text-2xl text-foreground/80 animate-fade-in text-balance">
-          {profile?.tagline || "Exploring Code Beyond The Universe "}
-        </p>
-        <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
-          <Button size="lg" className="animate-glow group" asChild>
-            <a href="#projects" className="flex items-center">
-              Explore Projects
-              <ChevronRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-            </a>
-          </Button>
-          <Button size="lg" variant="outline" className="glass bg-transparent" asChild>
-            <a href="https://wa.me/62895397306279" target="_blank" rel="noopener noreferrer">
-              Contact Me
-            </a>
-          </Button>
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
+            <div className="flex-1 text-center lg:text-left space-y-6 max-w-2xl">
+              <h1 className="font-heading text-5xl md:text-7xl lg:text-8xl font-bold animate-fade-in">
+                <span className="gradient-text">{profile?.full_name || "Welcome !"}</span>
+              </h1>
+              <p className="text-xl md:text-2xl text-foreground/80 animate-fade-in text-balance">
+                {profile?.tagline || "Exploring Code Beyond The Universe "}
+              </p>
+              <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
+                <Button size="lg" className="animate-glow group" asChild>
+                  <a href="#projects" className="flex items-center">
+                    Explore Projects
+                    <ChevronRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                  </a>
+                </Button>
+                <Button size="lg" variant="outline" className="glass bg-transparent" asChild>
+                  <a href="https://wa.me/62895397306279" target="_blank" rel="noopener noreferrer">
+                    Contact Me
+                  </a>
+                </Button>
+              </div>
+            </div>
+            <div className="flex-1 flex justify-center animate-float">
+              <Planet size={350} />
+            </div>
+          </div>
         </div>
-      </div>
-      <div className="flex-1 flex justify-center animate-float">
-        <Planet size={350} />
-      </div>
-    </div>
-  </div>
-</section>
+      </section>
 
       {/* Home Section */}
       <ScrollReveal>
@@ -111,7 +103,6 @@ export default async function Page() {
             </h2>
 
             <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-              {/* Profile Card */}
               <Card className="glass p-8 space-y-6 animate-float">
                 <div className="relative w-48 h-48 mx-auto">
                   <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary via-secondary to-accent animate-rotate-slow blur-xl opacity-50" />
@@ -123,11 +114,13 @@ export default async function Page() {
                 </div>
                 <div className="text-center space-y-2">
                   <h3 className="font-heading text-2xl font-bold">{profile?.full_name || "Muhammad Gauza Faliha"}</h3>
-                  <p className="text-muted-foreground">{profile?.tagline || "Computer Science Student at Gadjah Mada University I Accelerated Program Graduate l Research and Technology Enthusiast l Software Engineer Enthusiast l Junior Front End Developer & Full Stack Developer."}</p>
+                  <p className="text-muted-foreground">
+                    {profile?.tagline ||
+                      "Computer Science Student at Gadjah Mada University I Accelerated Program Graduate l Research and Technology Enthusiast l Software Engineer Enthusiast l Junior Front End Developer & Full Stack Developer."}
+                  </p>
                 </div>
               </Card>
 
-              {/* Skills */}
               <div className="space-y-6">
                 <div className="flex items-center justify-between">
                   <h3 className="font-heading text-2xl font-bold">Tech Stack</h3>
@@ -137,7 +130,7 @@ export default async function Page() {
                     </Button>
                   </Link>
                 </div>
-                
+
                 {skills && skills.length > 0 ? (
                   <div className="space-y-4">
                     {skills.slice(0, 8).map((skill) => (
@@ -161,7 +154,7 @@ export default async function Page() {
                         </div>
                       </div>
                     ))}
-                    
+
                     {skills.length > 8 && (
                       <div className="text-center pt-4">
                         <Link href="/admin/skills">
@@ -197,14 +190,12 @@ export default async function Page() {
             </h2>
 
             <div className="max-w-4xl mx-auto relative">
-              {/* Timeline line */}
               <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-secondary to-accent" />
 
               <div className="space-y-12">
                 {experiences && experiences.length > 0 ? (
-                  experiences.map((exp, index) => (
+                  experiences.map((exp) => (
                     <div key={exp.id} className="relative pl-20 group">
-                      {/* Planet marker */}
                       <div className="absolute left-0 top-0 w-16 h-16">
                         <Planet size={64} className="group-hover:scale-110 transition-transform" />
                       </div>
