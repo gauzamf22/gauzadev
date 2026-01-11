@@ -8,6 +8,8 @@ import { ChevronRight, Rocket, Code, Palette, BookOpen, ExternalLink, Download }
 import { createClient } from "@/lib/supabase/server"
 import Link from "next/link"
 import { ScrollReveal } from "@/components/scroll-reveal"
+import React from "react"
+import { TypingText } from "@/components/typing-text"
 
 export const revalidate = 0
 export const dynamic = 'force-dynamic'
@@ -27,7 +29,8 @@ export default async function Page() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+      <ScrollReveal>
+        <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
         <div className="container mx-auto px-4 relative z-10">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
             <div className="flex-1 text-center lg:text-left space-y-6 max-w-2xl">
@@ -35,7 +38,7 @@ export default async function Page() {
                 <span className="gradient-text">{profile?.full_name || "Welcome !"}</span>
               </h1>
               <p className="text-xl md:text-2xl text-foreground/80 animate-fade-in text-balance">
-                {profile?.tagline || "Exploring Code Beyond The Universe "}
+                <TypingText text={profile?.tagline || "Exploring Code Beyond The Universe"} speed={50} />
               </p>
               <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
                 <Button size="lg" className="animate-glow group" asChild>
@@ -57,6 +60,8 @@ export default async function Page() {
           </div>
         </div>
       </section>
+
+      </ScrollReveal>
 
       {/* Home Section */}
       <ScrollReveal>
