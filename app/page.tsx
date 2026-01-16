@@ -77,8 +77,8 @@ export default async function Page() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
                 {[
                   { icon: Code, title: "Web Development", desc: "Building modern, responsive web applications" },
-                  { icon: Rocket, title: "Software Engineering", desc: "Creating scalable software solutions" },
-                  { icon: Palette, title: "UI/UX Design", desc: "Designing beautiful user experiences" },
+                  { icon: Rocket, title: "Software Development", desc: "Creating scalable software solutions" },
+                  { icon: Palette, title: "UI/UX Design", desc: "Designing beautiful user interface and user experiences" },
                 ].map((item, index) => (
                   <Card key={index} className="glass group hover:scale-105 transition-all cursor-pointer">
                     <CardContent className="p-6 space-y-4">
